@@ -18,7 +18,8 @@ const helmet = require("helmet");
 const usersRoutes = require("./routes/users.js");
 const campgroundsRoutes = require("./routes/campgrounds.js");
 const reviewsRoutes = require("./routes/reviews.js");
-const dbUrl = "mongodb://127.0.0.1:27017/yelp-camp";
+
+const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/yelp-camp";
 const MongoStore = require("connect-mongo");
 const mongoSanitize = require("express-mongo-sanitize");
 
@@ -151,6 +152,7 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render("error", { err });
 });
 
-app.listen(3000, () => {
-  console.log("Serving on port 3000");
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Serving on port ${port}`);
 });
